@@ -30,8 +30,6 @@ namespace PolicyServer.Host.Controllers
             if (policy == null)
                 return NotFound();
 
-            var roles = policy.Roles.Select(y => y.Name);
-
             var policyResult = new
             {
                 Roles = policy.Roles.Select(x => new
@@ -42,7 +40,7 @@ namespace PolicyServer.Host.Controllers
                 Permissions = policy.Permissions.Select(x => new
                 {
                     x.Name,
-                    Roles = roles
+                    x.Roles
                 })
             };
 

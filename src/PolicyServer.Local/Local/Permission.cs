@@ -32,9 +32,7 @@ namespace PolicyServer.Local
         {
             if (roles == null) throw new ArgumentNullException(nameof(roles));
 
-            if (Roles.Any(x => roles.Contains(x))) return true;
-
-            return false;
+            return Roles.Any(roles.Contains);
         }
     }
 }

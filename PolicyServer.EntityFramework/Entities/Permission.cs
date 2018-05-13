@@ -10,6 +10,15 @@ namespace PolicyServer.EntityFramework.Entities
         public string DisplayName { get; set; }
         public string Description { get; set; }
 
-        public List<Role> Roles { get; set; }
+        public ICollection<PermissionRole> PermissionRoles { get; set; } = new List<PermissionRole>();
+    }
+
+    public class PermissionRole
+    {
+        public int PermissionId { get; set; }
+        public Permission Permission { get; set; }
+
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
     }
 }

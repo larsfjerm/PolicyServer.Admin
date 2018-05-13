@@ -23,11 +23,12 @@ namespace PolicyServer.Host.Controllers
         public async Task<IActionResult> GetPermissions()
         {
             var permissions = await _context.Permissions
-                .Include(x => x.Roles)
+                .Include(x => x.PermissionRoles)
+                    .ThenInclude(x => x.Role)
                 .Select(x => new
                 {
                     x.Name,
-                    Roles = x.Roles.Select(y => y.Name)
+                    Roles = x.PermissionRoles.Select(y => y.Role.Name)
                 })
                 .OrderBy(x => x.Name)
                 .ToListAsync();
@@ -40,11 +41,12 @@ namespace PolicyServer.Host.Controllers
         {
             var permission = await _context.Permissions
                 .Where(x => x.Name == permissionName)
-                .Include(x => x.Roles)
+                .Include(x => x.PermissionRoles)
+                    .ThenInclude(x => x.Role)
                 .Select(x => new
                 {
                     x.Name,
-                    Roles = x.Roles.Select(y => y.Name)
+                    Roles = x.PermissionRoles.Select(y => y.Role.Name)
                 })
                 .SingleOrDefaultAsync();
 
@@ -66,7 +68,7 @@ namespace PolicyServer.Host.Controllers
             return Created($"/permissions/{permission.Name}", new { permission.Name });
         }
 
-        [HttpDelete("{permissionName")]
+        [HttpDelete("{permissionName}")]
         public async Task<IActionResult> DeletePermission(string permissionName)
         {
             var permission = await _context.Permissions.SingleOrDefaultAsync(x => x.Name == permissionName);

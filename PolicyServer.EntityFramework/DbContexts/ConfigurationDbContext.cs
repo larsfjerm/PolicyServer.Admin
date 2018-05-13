@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PolicyServer.EntityFramework.Entities;
+using PolicyServer.EntityFramework.Extensions;
 
 namespace PolicyServer.EntityFramework.DbContexts
 {
@@ -16,5 +14,12 @@ namespace PolicyServer.EntityFramework.DbContexts
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Policy> Policies { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ConfigureContext();
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

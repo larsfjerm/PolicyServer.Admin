@@ -23,11 +23,11 @@ namespace PolicyServer.Host.Controllers
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _context.Roles
-                .Include(x => x.Subjects)
+                .Include(x => x.RoleSubjects)
                 .Select(x => new
                 {
                     x.Name,
-                    SubjectsCount = x.Subjects.Count
+                    SubjectsCount = x.RoleSubjects.Count
                 })
                 .OrderBy(x => x.Name)
                 .ToListAsync();
@@ -40,11 +40,11 @@ namespace PolicyServer.Host.Controllers
         {
             var role = await _context.Roles
                 .Where(x => x.Name == roleName)
-                .Include(x => x.Subjects)
+                .Include(x => x.RoleSubjects)
                 .Select(x => new
                 {
                     x.Name,
-                    x.Subjects
+                    Subjects = x.RoleSubjects.Select(y => y.Subject)
                 })
                 .SingleOrDefaultAsync();
 
@@ -66,7 +66,7 @@ namespace PolicyServer.Host.Controllers
             return Created($"/roles/{role.Name}", new { role.Name });
         }
 
-        [HttpDelete("{roleName")]
+        [HttpDelete("{roleName}")]
         public async Task<IActionResult> DeleteRole(string roleName)
         {
             var role = await _context.Roles.SingleOrDefaultAsync(x => x.Name == roleName);

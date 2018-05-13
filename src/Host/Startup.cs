@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using Host.AspNetCorePolicy;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,13 +33,26 @@ namespace Host
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            // this sets up authentication - for this demo we simply use a local cookie
-            // typically authentication would be done using an external provider
             services.AddAuthentication("Cookies")
                 .AddCookie("Cookies");
 
+            //services
+            //    .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            //    .AddIdentityServerAuthentication(opt =>
+            //        Configuration.GetSection("IdentityServerAuthenticationOptions")
+            //            .Get<IdentityServerAuthenticationOptions>());
+
             // this sets up the PolicyServer client library and policy provider - configuration is loaded from appsettings.json
-            services.AddPolicyServerClient(Configuration.GetSection("Policy"))
+            services.AddPolicyServerClient(x =>
+                {
+                    x.IdentityServerEndpoint = "http://localhost:5000";
+                    x.ClientId = "policy.client";
+                    x.ClientSecret = "secret";
+                    x.PolicyServerEndpoint = "http://localhost:9117";
+                    x.PolicyName = "Default";
+                    x.PolicySecret = "123";
+                    x.PolicyServerApiName = "policyserver.api";
+                })
                 .AddAuthorizationPermissionPolicies();
 
             // this adds the necessary handler for our custom medication requirement

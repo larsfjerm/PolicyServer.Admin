@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PolicyServer.EntityFramework.DbContexts;
+using PolicyServer.EntityFramework.Entities;
 
 namespace PolicyServer.Host.Controllers
 {
@@ -28,23 +28,25 @@ namespace PolicyServer.Host.Controllers
             if (role == null)
                 return NotFound();
 
-            role.Subjects.Add(subject);
+            role.RoleSubjects.Add(new RoleSubject { RoleId = role.Id, Subject = subject});
             await _context.SaveChangesAsync();
 
             return Created($"/roles/{role.Name}/subjects", subject);
         }
 
-        [HttpDelete("{subject")]
+        [HttpDelete("{subject}")]
         public async Task<IActionResult> DeleteSubject(string roleName, string subject)
         {
             if (string.IsNullOrWhiteSpace(subject))
                 return BadRequest("No subject");
 
-            var role = await _context.Roles.SingleOrDefaultAsync(x => x.Name == roleName);
+            var role = await _context.Roles
+                .Include(x => x.RoleSubjects)
+                .SingleOrDefaultAsync(x => x.Name == roleName);
             if (role == null)
                 return NotFound();
 
-            role.Subjects.Remove(subject);
+            role.RoleSubjects.Remove(new RoleSubject { RoleId = role.Id, Subject = subject });
             await _context.SaveChangesAsync();
 
             return NoContent();

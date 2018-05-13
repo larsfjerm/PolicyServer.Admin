@@ -38,7 +38,7 @@ namespace PolicyServer.Local
             var roles = Roles.Where(x=> x.Evaluate(user)).Select(x => x.Name).ToArray();
             var permissions = Permissions.Where(x => x.Evaluate(roles)).Select(x => x.Name).ToArray();
 
-            var result = new PolicyResult()
+            var result = new PolicyResult
             {
                 Roles = roles.Distinct(),
                 Permissions = permissions.Distinct()

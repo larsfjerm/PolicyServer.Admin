@@ -18,29 +18,48 @@ namespace PolicyServer.Host.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> GetPolicy()
+        [HttpGet("{policyName}")]
+        public async Task<IActionResult> GetPolicy(string policyName, [FromQuery] string secret)
         {
+            if (string.IsNullOrWhiteSpace(policyName))
+                return BadRequest();
+            if (string.IsNullOrWhiteSpace(secret))
+                return BadRequest("Query attribute policySecret is missing");
+
+            switch (policyName)
+            {
+                case "Default":
+                    if(secret.Equals("123"))
+                        break;
+                    return Unauthorized();
+                default:
+                    return Unauthorized();
+            }
+
             var policy = await _context.Policies
-                .Include(x => x.Permissions)
-                    .ThenInclude(x => x.Roles)
-                .Include(x => x.Roles)
-                    .ThenInclude(x => x.Subjects)
-                .SingleOrDefaultAsync(x => x.Id == 1);
+                .Include(x => x.PolicyRoles)
+                    .ThenInclude(x => x.Role)
+                        .ThenInclude(x => x.RoleSubjects)
+                .Include(x => x.PolicyPermissions)
+                    .ThenInclude(x => x.Permission)
+                        .ThenInclude(x => x.PermissionRoles)
+                            .ThenInclude(x => x.Role)
+                .SingleOrDefaultAsync(x => x.Name == policyName);
 
             if (policy == null)
                 return NotFound();
 
             var policyResult = new
             {
-                Roles = policy.Roles.Select(x => new
+                Roles = policy.PolicyRoles.Select(x => new
                 {
-                    x.Name,
-                    x.Subjects
+                    x.Role.Name,
+                    Subjects = x.Role.RoleSubjects.Select(y => y.Subject)
                 }),
-                Permissions = policy.Permissions.Select(x => new
+                Permissions = policy.PolicyPermissions.Select(x => new
                 {
-                    x.Name,
-                    x.Roles
+                    x.Permission.Name,
+                    Roles = x.Permission.PermissionRoles.Select(y => y.Role.Name)
                 })
             };
 

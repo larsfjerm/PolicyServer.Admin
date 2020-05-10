@@ -7,9 +7,9 @@ namespace PolicyServer.EntityFramework.Extensions
     {
         public static void ConfigureContext(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Permission>(permission =>
+            modelBuilder.Entity<PermissionEntity>(permission =>
             {
-                permission.ToTable("Permission");
+                permission.ToTable("permission");
                 permission.HasKey(x => x.Id);
 
                 permission.Property(x => x.Name).HasMaxLength(200).IsRequired();
@@ -22,9 +22,9 @@ namespace PolicyServer.EntityFramework.Extensions
                 permission.HasMany(x => x.PermissionRoles);
             });
 
-            modelBuilder.Entity<Role>(role =>
+            modelBuilder.Entity<RoleEntity>(role =>
             {
-                role.ToTable("Role");
+                role.ToTable("role");
                 role.HasKey(x => x.Id);
 
                 role.Property(x => x.Name).HasMaxLength(200).IsRequired();
@@ -37,9 +37,9 @@ namespace PolicyServer.EntityFramework.Extensions
                 role.HasMany(x => x.RoleSubjects);
             });
 
-            modelBuilder.Entity<Policy>(policy =>
+            modelBuilder.Entity<PolicyEntity>(policy =>
             {
-                policy.ToTable("Policy");
+                policy.ToTable("policy");
                 policy.HasKey(x => x.Id);
 
                 policy.Property(x => x.Name).HasMaxLength(200).IsRequired();
@@ -53,10 +53,26 @@ namespace PolicyServer.EntityFramework.Extensions
                 policy.HasMany(x => x.PolicyPermissions);
             });
 
-            modelBuilder.Entity<RoleSubject>(roleSubject => { roleSubject.HasKey(x => new {x.RoleId, x.Subject}); });
-            modelBuilder.Entity<PermissionRole>(permissionRole => { permissionRole.HasKey(x => new {x.PermissionId, x.RoleId}); });
-            modelBuilder.Entity<PolicyRole>(policyRole => { policyRole.HasKey(x => new {x.PolicyId, x.RoleId }); });
-            modelBuilder.Entity<PolicyPermission>(policyPermission => { policyPermission.HasKey(x => new {x.PolicyId, x.PermissionId }); });
+            modelBuilder.Entity<RoleSubjectEntity>(roleSubject => 
+            {
+                roleSubject.ToTable("role_subject");
+                roleSubject.HasKey(x => new {x.RoleId, x.Subject});
+            });
+            modelBuilder.Entity<PermissionRoleEntity>(permissionRole => 
+            {
+                permissionRole.ToTable("permission_role");
+                permissionRole.HasKey(x => new {x.PermissionId, x.RoleId});
+            });
+            modelBuilder.Entity<PolicyRoleEntity>(policyRole => 
+            {
+                policyRole.ToTable("policy_role");
+                policyRole.HasKey(x => new {x.PolicyId, x.RoleId }); 
+            });
+            modelBuilder.Entity<PolicyPermissionEntity>(policyPermission => 
+            {
+                policyPermission.ToTable("policy_permission");
+                policyPermission.HasKey(x => new {x.PolicyId, x.PermissionId }); 
+            });
         }
     }
 }

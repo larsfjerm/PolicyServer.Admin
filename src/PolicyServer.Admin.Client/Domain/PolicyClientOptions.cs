@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PolicyServer.Admin
+namespace PolicyServer.Admin.Client
 {
     public class PolicyClientOptions
     {

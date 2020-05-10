@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using PolicyServer.EntityFramework.DbContexts;
 using PolicyServer.EntityFramework.Entities;
 
-namespace PolicyServer.Host.Controllers
+namespace PolicyServer.Admin.Controllers
 {
-    [Authorize]
+    [ApiController]
     [Route("[controller]")]
     public class RolesController : ControllerBase
     {
@@ -55,7 +55,7 @@ namespace PolicyServer.Host.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostRole([FromBody] Role role)
+        public async Task<IActionResult> PostRole([FromBody] RoleEntity role)
         {
             if (await _context.Roles.AnyAsync(x => x.Name == role.Name))
                 return BadRequest("Invalid role name");

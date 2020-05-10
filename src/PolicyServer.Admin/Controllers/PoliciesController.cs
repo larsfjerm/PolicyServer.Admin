@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PolicyServer.EntityFramework.DbContexts;
 
-namespace PolicyServer.Host.Controllers
+namespace PolicyServer.Admin.Controllers
 {
-    [Authorize]
+    [ApiController]
     [Route("[controller]")]
     public class PoliciesController : ControllerBase
     {
@@ -16,6 +16,12 @@ namespace PolicyServer.Host.Controllers
         public PoliciesController(ConfigurationDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("Hei");
         }
 
         [HttpGet("{policyName}")]

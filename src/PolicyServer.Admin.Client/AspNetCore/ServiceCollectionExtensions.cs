@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using PolicyServer.Admin;
+using PolicyServer.Admin.Client;
 using PolicyServer.Runtime.Client;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -74,7 +74,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
                 ClientId = options.ClientId,
                 ClientSecret = options.ClientSecret,
-                Scope = options.PolicyServerApiName,
+                Scope = options.PolicyServerApiName, 
             });
 
             if (tokenResponse.IsError)

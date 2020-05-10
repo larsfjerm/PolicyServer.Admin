@@ -42,7 +42,7 @@ namespace Host
                     x.IdentityServerEndpoint = "http://localhost:5000";
                     x.ClientId = "policy.client";
                     x.ClientSecret = "secret";
-                    x.PolicyServerEndpoint = "http://localhost:9117";
+                    x.PolicyServerEndpoint = "http://localhost:5500";
                     x.PolicyName = "Default";
                     x.PolicySecret = "123";
                     x.PolicyServerApiName = "policyserver.api";

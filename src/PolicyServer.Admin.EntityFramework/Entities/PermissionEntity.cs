@@ -2,7 +2,7 @@
 
 namespace PolicyServer.EntityFramework.Entities
 {
-    public class Permission
+    public class PermissionEntity
     {
         public int Id { get; set; }
         public bool Enabled { get; set; } = true;
@@ -10,15 +10,15 @@ namespace PolicyServer.EntityFramework.Entities
         public string DisplayName { get; set; }
         public string Description { get; set; }
 
-        public ICollection<PermissionRole> PermissionRoles { get; set; } = new List<PermissionRole>();
+        public ICollection<PermissionRoleEntity> PermissionRoles { get; set; } = new List<PermissionRoleEntity>();
     }
 
-    public class PermissionRole
+    public class PermissionRoleEntity
     {
         public int PermissionId { get; set; }
-        public Permission Permission { get; set; }
+        public PermissionEntity Permission { get; set; }
 
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public RoleEntity Role { get; set; }
     }
 }

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using PolicyServer.EntityFramework.DbContexts;
 using PolicyServer.EntityFramework.Entities;
 
-namespace PolicyServer.Host.Controllers
+namespace PolicyServer.Admin.Controllers
 {
-    [Authorize]
+    [ApiController]
     [Route("roles/{roleName}/subjects")]
     public class RoleSubjectsController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace PolicyServer.Host.Controllers
             if (role == null)
                 return NotFound();
 
-            role.RoleSubjects.Add(new RoleSubject { RoleId = role.Id, Subject = subject});
+            role.RoleSubjects.Add(new RoleSubjectEntity { RoleId = role.Id, Subject = subject});
             await _context.SaveChangesAsync();
 
             return Created($"/roles/{role.Name}/subjects", subject);
@@ -46,7 +46,7 @@ namespace PolicyServer.Host.Controllers
             if (role == null)
                 return NotFound();
 
-            role.RoleSubjects.Remove(new RoleSubject { RoleId = role.Id, Subject = subject });
+            role.RoleSubjects.Remove(new RoleSubjectEntity { RoleId = role.Id, Subject = subject });
             await _context.SaveChangesAsync();
 
             return NoContent();

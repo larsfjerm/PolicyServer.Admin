@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using PolicyServer.Admin;
+using PolicyServer.Admin.Client;
 using Xunit;
 
 namespace PolicyServer.Admin.Tests

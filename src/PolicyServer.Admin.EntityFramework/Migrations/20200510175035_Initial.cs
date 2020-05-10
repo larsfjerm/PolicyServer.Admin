@@ -1,65 +1,62 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using System;
-using System.Collections.Generic;
 
-namespace PolicyServer.Host.Migrations
+namespace PolicyServer.Admin.EntityFramework.Migrations
 {
-    public partial class ConfigurationContext : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Permission",
+                name: "permission",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Description = table.Column<string>(maxLength: 1000, nullable: true),
-                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Enabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false)
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permission", x => x.Id);
+                    table.PrimaryKey("PK_permission", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Policy",
+                name: "policy",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Description = table.Column<string>(maxLength: 1000, nullable: true),
-                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Enabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false)
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Policy", x => x.Id);
+                    table.PrimaryKey("PK_policy", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "role",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Description = table.Column<string>(maxLength: 1000, nullable: true),
-                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Enabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false)
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.Id);
+                    table.PrimaryKey("PK_role", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PolicyPermission",
+                name: "policy_permission",
                 columns: table => new
                 {
                     PolicyId = table.Column<int>(nullable: false),
@@ -67,23 +64,23 @@ namespace PolicyServer.Host.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PolicyPermission", x => new { x.PolicyId, x.PermissionId });
+                    table.PrimaryKey("PK_policy_permission", x => new { x.PolicyId, x.PermissionId });
                     table.ForeignKey(
-                        name: "FK_PolicyPermission_Permission_PermissionId",
+                        name: "FK_policy_permission_permission_PermissionId",
                         column: x => x.PermissionId,
-                        principalTable: "Permission",
+                        principalTable: "permission",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PolicyPermission_Policy_PolicyId",
+                        name: "FK_policy_permission_policy_PolicyId",
                         column: x => x.PolicyId,
-                        principalTable: "Policy",
+                        principalTable: "policy",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PermissionRole",
+                name: "permission_role",
                 columns: table => new
                 {
                     PermissionId = table.Column<int>(nullable: false),
@@ -91,23 +88,23 @@ namespace PolicyServer.Host.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionRole", x => new { x.PermissionId, x.RoleId });
+                    table.PrimaryKey("PK_permission_role", x => new { x.PermissionId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_PermissionRole_Permission_PermissionId",
+                        name: "FK_permission_role_permission_PermissionId",
                         column: x => x.PermissionId,
-                        principalTable: "Permission",
+                        principalTable: "permission",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PermissionRole_Role_RoleId",
+                        name: "FK_permission_role_role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Role",
+                        principalTable: "role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PolicyRole",
+                name: "policy_role",
                 columns: table => new
                 {
                     PolicyId = table.Column<int>(nullable: false),
@@ -115,23 +112,23 @@ namespace PolicyServer.Host.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PolicyRole", x => new { x.PolicyId, x.RoleId });
+                    table.PrimaryKey("PK_policy_role", x => new { x.PolicyId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_PolicyRole_Policy_PolicyId",
+                        name: "FK_policy_role_policy_PolicyId",
                         column: x => x.PolicyId,
-                        principalTable: "Policy",
+                        principalTable: "policy",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PolicyRole_Role_RoleId",
+                        name: "FK_policy_role_role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Role",
+                        principalTable: "role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleSubject",
+                name: "role_subject",
                 columns: table => new
                 {
                     RoleId = table.Column<int>(nullable: false),
@@ -139,45 +136,45 @@ namespace PolicyServer.Host.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleSubject", x => new { x.RoleId, x.Subject });
+                    table.PrimaryKey("PK_role_subject", x => new { x.RoleId, x.Subject });
                     table.ForeignKey(
-                        name: "FK_RoleSubject_Role_RoleId",
+                        name: "FK_role_subject_role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Role",
+                        principalTable: "role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permission_Name",
-                table: "Permission",
+                name: "IX_permission_Name",
+                table: "permission",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissionRole_RoleId",
-                table: "PermissionRole",
+                name: "IX_permission_role_RoleId",
+                table: "permission_role",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Policy_Name",
-                table: "Policy",
+                name: "IX_policy_Name",
+                table: "policy",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PolicyPermission_PermissionId",
-                table: "PolicyPermission",
+                name: "IX_policy_permission_PermissionId",
+                table: "policy_permission",
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PolicyRole_RoleId",
-                table: "PolicyRole",
+                name: "IX_policy_role_RoleId",
+                table: "policy_role",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Role_Name",
-                table: "Role",
+                name: "IX_role_Name",
+                table: "role",
                 column: "Name",
                 unique: true);
         }
@@ -185,25 +182,25 @@ namespace PolicyServer.Host.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PermissionRole");
+                name: "permission_role");
 
             migrationBuilder.DropTable(
-                name: "PolicyPermission");
+                name: "policy_permission");
 
             migrationBuilder.DropTable(
-                name: "PolicyRole");
+                name: "policy_role");
 
             migrationBuilder.DropTable(
-                name: "RoleSubject");
+                name: "role_subject");
 
             migrationBuilder.DropTable(
-                name: "Permission");
+                name: "permission");
 
             migrationBuilder.DropTable(
-                name: "Policy");
+                name: "policy");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "role");
         }
     }
 }

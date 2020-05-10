@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PolicyServer.Admin
+namespace PolicyServer.Admin.Client
 {
     /// <summary>
     /// Models an application role
@@ -42,7 +42,7 @@ namespace PolicyServer.Admin
             if (user == null) throw new ArgumentNullException(nameof(user));
 
             var sub = user.FindFirst("sub")?.Value;
-            if (!String.IsNullOrWhiteSpace(sub))
+            if (!string.IsNullOrWhiteSpace(sub))
             {
                 if (Subjects.Contains(sub)) return true;
             }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace PolicyServer.Admin.AspNetCore
+namespace PolicyServer.Admin.Client.AspNetCore
 {
     internal class PolicyUpdater
     {

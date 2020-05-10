@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using PolicyServer.EntityFramework.DbContexts;
 using PolicyServer.EntityFramework.Entities;
 
-namespace PolicyServer.Host.Controllers
+namespace PolicyServer.Admin.Controllers
 {
-    [Authorize]
+    [ApiController]
     [Route("[controller]")]
     public class PermissionsController : ControllerBase
     {
@@ -57,7 +57,7 @@ namespace PolicyServer.Host.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostPermission([FromBody] Permission permission)
+        public async Task<IActionResult> PostPermission([FromBody] PermissionEntity permission)
         {
             if (await _context.Permissions.AnyAsync(x => x.Name == permission.Name))
                 return BadRequest("Invalid permission name");

@@ -15,9 +15,9 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
-	
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\PolicyServer.Admin\PolicyServer.Admin.csproj" />
-  </ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\PolicyServer.Admin.Client\PolicyServer.Admin.Client.csproj" />
+	</ItemGroup>
 
 </Project>

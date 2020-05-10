@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace PolicyServer.Local.AspNetCore
+namespace PolicyServer.Admin.AspNetCore
 {
     internal class PolicyUpdater
     {

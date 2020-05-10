@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PolicyServer.Local
+namespace PolicyServer.Admin
 {
     /// <summary>
     /// Models a permission

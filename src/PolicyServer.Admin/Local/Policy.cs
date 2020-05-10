@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using PolicyServer.Runtime.Client;
 
-namespace PolicyServer.Local
+namespace PolicyServer.Admin
 {
     /// <summary>
     /// Models a policy

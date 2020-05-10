@@ -6,7 +6,7 @@
 
     <Authors>Brock Allen;Dominick Baier;Michele Leroux-Bustamante</Authors>
     <Description>Free OSS proof of concept of PolicyServer</Description>
-    <PackageId>PolicyServer.Local</PackageId>
+    <PackageId>PolicyServer.Admin</PackageId>
     <PackageTags>Authorization;Roles;Permissions</PackageTags>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

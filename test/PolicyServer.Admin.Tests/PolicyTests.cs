@@ -4,10 +4,10 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using PolicyServer.Local;
+using PolicyServer.Admin;
 using Xunit;
 
-namespace PolicyServerLocal.Tests
+namespace PolicyServer.Admin.Tests
 {
     public class PolicyTests
     {

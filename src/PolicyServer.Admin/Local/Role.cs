@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PolicyServer.Local
+namespace PolicyServer.Admin
 {
     /// <summary>
     /// Models an application role

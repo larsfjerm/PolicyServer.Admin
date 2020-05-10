@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using PolicyServer.Local;
+using PolicyServer.Admin;
 
 namespace PolicyServer.Runtime.Client
 {

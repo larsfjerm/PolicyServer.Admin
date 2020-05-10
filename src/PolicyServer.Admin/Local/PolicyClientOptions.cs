@@ -1,12 +1,9 @@
 ﻿using System;
 
-namespace PolicyServer.Local
+namespace PolicyServer.Admin
 {
     public class PolicyClientOptions
     {
-        /// <summary>
-        /// IdentityServer Uri
-        /// </summary>
         public string IdentityServerEndpoint { get; set; }
 
         public string ClientId { get; set; }
@@ -14,9 +11,6 @@ namespace PolicyServer.Local
 
         public string PolicyServerApiName { get; set; }
 
-        /// <summary>
-        /// PolicyServer Uri
-        /// </summary>
         public string PolicyServerEndpoint { get; set; }
 
         public string PolicyName { get; set; } = "DefaultPolicy";

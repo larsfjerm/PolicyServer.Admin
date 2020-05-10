@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PolicyServer.Local\PolicyServer.Local.csproj" />
+    <ProjectReference Include="..\PolicyServer.Admin\PolicyServer.Admin.csproj" />
   </ItemGroup>
 
 </Project>

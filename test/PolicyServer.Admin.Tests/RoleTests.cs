@@ -3,10 +3,10 @@
 
 using System;
 using FluentAssertions;
-using PolicyServer.Local;
+using PolicyServer.Admin;
 using Xunit;
 
-namespace PolicyServerLocal.Tests
+namespace PolicyServer.Admin.Tests
 {
     public class RoleTests
     {

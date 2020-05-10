@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using PolicyServer.Local;
+using PolicyServer.Admin;
 using PolicyServer.Runtime.Client;
 
 namespace Microsoft.Extensions.DependencyInjection

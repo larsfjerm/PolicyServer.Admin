@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PolicyServer.EntityFramework\PolicyServer.EntityFramework.csproj" />
+    <ProjectReference Include="..\PolicyServer.Admin.EntityFramework\PolicyServer.Admin.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

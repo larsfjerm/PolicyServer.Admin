@@ -1,4 +1,5 @@
-# PolicyServer (local version)
+# PolicyServer.Admin - Work in progress
+
 We've been talking about separation of concerns of authentication and authorization quite a bit in the past (see the [blog post](https://leastprivilege.com/2016/12/16/identity-vs-permissions/) that started all and the [video](https://vimeo.com/223982185) that showed off our first prototype).
 As a result, we have developed a commercial product called [PolicyServer](http://solliance.net/products/policyserver).
 

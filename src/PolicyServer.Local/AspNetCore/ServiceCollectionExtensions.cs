@@ -59,15 +59,23 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static async Task<Policy> GetPolicy(PolicyClientOptions options)
         {
+            var client = new HttpClient();
+
             // discover endpoints from metadata
-            var disco = await DiscoveryClient.GetAsync(options.IdentityServerEndpoint);
+            var disco = await client.GetDiscoveryDocumentAsync(options.IdentityServerEndpoint);
             if (disco.IsError)
             {
                 throw new InvalidCredentialException("Invalid - " + disco.Error);
             }
 
-            var tokenClient = new TokenClient(disco.TokenEndpoint, options.ClientId, options.ClientSecret);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(options.PolicyServerApiName);
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+
+                ClientId = options.ClientId,
+                ClientSecret = options.ClientSecret,
+                Scope = options.PolicyServerApiName,
+            });
 
             if (tokenResponse.IsError)
             {
@@ -75,7 +83,6 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             // call policy server
-            var client = new HttpClient();
             client.SetBearerToken(tokenResponse.AccessToken);
 
             var response = await client.GetAsync($"{options.PolicyServerEndpoint}/policies/{options.PolicyName}?secret={options.PolicySecret}");

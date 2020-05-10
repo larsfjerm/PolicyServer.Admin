@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using PolicyServer.EntityFramework.Extensions;
 
 namespace PolicyServer.Host
@@ -38,20 +37,30 @@ namespace PolicyServer.Host
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddConsole();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseStaticFiles();
 
-            app.UsePolicyServerEntityFramework();
-
+            app.UseRouting();
             app.UseAuthentication();
 
-            app.UseMvc();
+            // add this middleware to make roles and permissions available as claims
+            // this is mainly useful for using the classic [Authorize(Roles="foo")] and IsInRole functionality
+            // this is not needed if you use the client library directly or the new policy-based authorization framework in ASP.NET Core
+            app.UsePolicyServerClaims();
+            //app.UsePolicyServerEntityFramework();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute().RequireAuthorization();
+            });
         }
     }
 }

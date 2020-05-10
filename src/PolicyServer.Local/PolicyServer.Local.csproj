@@ -1,16 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <VersionPrefix>2.0.1</VersionPrefix>
 
     <Authors>Brock Allen;Dominick Baier;Michele Leroux-Bustamante</Authors>
-    <Description>free OSS version of PolicyServer</Description>
+    <Description>Free OSS proof of concept of PolicyServer</Description>
     <PackageId>PolicyServer.Local</PackageId>
     <PackageTags>Authorization;Roles;Permissions</PackageTags>
-    <PackageIconUrl>http://policyserver.io/images/shield64.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/PolicyServer/PolicyServer.Local</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/PolicyServer/PolicyServer.Local/blob/release/LICENSE</PackageLicenseUrl>
+	<PackageIcon>icon.png</PackageIcon>
+	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -18,13 +17,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="3.6.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
+	 <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="IdentityModel" Version="4.2.0" />
   </ItemGroup>
   
 </Project>

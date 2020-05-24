@@ -39,12 +39,12 @@ namespace Host
             // this sets up the PolicyServer client library and policy provider - configuration is loaded from appsettings.json
             services.AddPolicyServerClient(x =>
                 {
-                    x.IdentityServerEndpoint = "http://localhost:5000";
-                    x.ClientId = "policy.client";
+                    x.IdentityServerEndpoint = "http://localhost:5001";
+                    x.ClientId = "policyserver.client";
                     x.ClientSecret = "secret";
                     x.PolicyServerEndpoint = "http://localhost:5500";
-                    x.PolicyName = "Default";
-                    x.PolicySecret = "123";
+                    x.PolicyName = "Hospital";
+                    x.PolicySecret = "secret";
                     x.PolicyServerApiName = "policyserver.api";
                 })
                 .AddAuthorizationPermissionPolicies();

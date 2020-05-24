@@ -18,12 +18,14 @@ namespace Host.AspNetCorePolicy
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, MedicationRequirement requirement)
         {
-            var user = context.User; var allowed = false;
-
+            var user = context.User;
             if (await _client.HasPermissionAsync(user, "PrescribeMedication"))
             {
-                if (requirement.Amount <= 10) allowed = true;
-                else allowed = await _client.IsInRoleAsync(user, "doctor");
+                bool allowed;
+                if (requirement.Amount <= 10)
+                    allowed = true;
+                else
+                    allowed = await _client.IsInRoleAsync(user, "doctor");
 
                 if (allowed || requirement.MedicationName == "placebo")
                 {

@@ -34,8 +34,8 @@ namespace PolicyServer.Admin.Controllers
 
             switch (policyName)
             {
-                case "Default":
-                    if(secret.Equals("123"))
+                case "Hospital":
+                    if(secret.Equals("secret"))
                         break;
                     return Unauthorized();
                 default:

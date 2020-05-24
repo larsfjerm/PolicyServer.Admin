@@ -13,7 +13,7 @@ namespace PolicyServer.Admin.Client
 
         public string PolicyServerEndpoint { get; set; }
 
-        public string PolicyName { get; set; } = "DefaultPolicy";
+        public string PolicyName { get; set; }
         public string PolicySecret { get; set; }
 
         public TimeSpan PolicyUpdaterInterval { get; set; } = TimeSpan.FromSeconds(30);

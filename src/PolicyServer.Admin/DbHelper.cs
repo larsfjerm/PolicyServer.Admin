@@ -39,45 +39,92 @@ namespace PolicyServer.Admin
 
             var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
-            if (context.Policies.Any(x => x.Name == "Default"))
+            if (context.Policies.Any(x => x.Name == "Hospital"))
                 return;
 
-            var role = new RoleEntity
+            var doctorRole = new RoleEntity
             {
-                Name = "Test Role",
+                Name = "doctor",
                 RoleSubjects = new List<RoleSubjectEntity>
-                            {
-                                new RoleSubjectEntity {Subject = "a-sub"}
-                            }
+                {
+                    new RoleSubjectEntity {Subject = "1" }
+                }
+            };
+            var nurseRole = new RoleEntity
+            {
+                Name = "nurse",
+                RoleSubjects = new List<RoleSubjectEntity>
+                {
+                    new RoleSubjectEntity {Subject = "11" }
+                }
+            };
+            var patientRole = new RoleEntity
+            {
+                Name = "patient",
+                RoleSubjects = new List<RoleSubjectEntity>
+                {
+                    new RoleSubjectEntity {Subject = "99" }
+                }
             };
 
             context.Policies.Add(new PolicyEntity
             {
-                Name = "Default",
+                Name = "Hospital",
                 PolicyRoles = new List<PolicyRoleEntity>
-                            {
-                                new PolicyRoleEntity
-                                {
-                                    Role = role
-                                }
-                            },
+                {
+                    new PolicyRoleEntity { Role = doctorRole },
+                    new PolicyRoleEntity { Role = nurseRole },
+                    new PolicyRoleEntity { Role = patientRole }
+                },
                 PolicyPermissions = new List<PolicyPermissionEntity>
+                {
+                    new PolicyPermissionEntity
+                    {
+                        Permission = new PermissionEntity
+                        {
+                            Name = "SeePatients",
+                            PermissionRoles = new List<PermissionRoleEntity>
                             {
-                                new PolicyPermissionEntity
-                                {
-                                    Permission = new PermissionEntity
-                                    {
-                                        Name = "Admin_Permission",
-                                        PermissionRoles = new List<PermissionRoleEntity>
-                                        {
-                                            new PermissionRoleEntity
-                                            {
-                                                Role = role
-                                            }
-                                        }
-                                    }
-                                }
+                                new PermissionRoleEntity { Role = doctorRole },
+                                new PermissionRoleEntity { Role = nurseRole }
                             }
+                        }
+                    },
+                    new PolicyPermissionEntity
+                    {
+                        Permission = new PermissionEntity
+                        {
+                            Name = "PerformSurgery",
+                            PermissionRoles = new List<PermissionRoleEntity>
+                            {
+                                new PermissionRoleEntity { Role = doctorRole }
+                            }
+                        }
+                    },
+                    new PolicyPermissionEntity
+                    {
+                        Permission = new PermissionEntity
+                        {
+                            Name = "PrescribeMedication",
+                            PermissionRoles = new List<PermissionRoleEntity>
+                            {
+                                new PermissionRoleEntity { Role = doctorRole },
+                                new PermissionRoleEntity { Role = nurseRole }
+                            }
+                        }
+                    },
+                    new PolicyPermissionEntity
+                    {
+                        Permission = new PermissionEntity
+                        {
+                            Name = "RequestPainMedication",
+                            PermissionRoles = new List<PermissionRoleEntity>
+                            {
+                                new PermissionRoleEntity { Role = patientRole },
+                            }
+                        }
+                    }
+                }
             });
 
             await context.SaveChangesAsync();

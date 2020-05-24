@@ -26,7 +26,7 @@ namespace PolicyServer.Admin
                 .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(opt =>
                 {
-                    opt.Authority = "http://localhost:5000";
+                    opt.Authority = "http://localhost:5001";
                     opt.ApiName = "policyserver.api";
                     opt.ApiSecret = "secret";
                     opt.RequireHttpsMetadata = false;
